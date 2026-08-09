@@ -11,5 +11,15 @@ config_version=5
 [application]
 
 config/name="WorldMetadataEditor"
+run/main_scene="uid://c6euumsoulpst"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
+
+[debug]
+
+gdscript/warnings/untyped_declaration=1
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

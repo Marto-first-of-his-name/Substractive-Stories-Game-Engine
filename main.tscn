@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6euumsoulpst"]
+
+[ext_resource type="Script" uid="uid://b02480fs3gybr" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://4j73lus1k3kq" path="res://imageUploadManager.gd" id="2_0xm2m"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_ig7tw")
+
+[node name="uploadButton" type="Button" parent="."]
+offset_left = 20.0
+offset_top = 25.0
+offset_right = 118.0
+offset_bottom = 56.0
+text = "upload files"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+access = 2
+
+[node name="uploadedImage" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ImageUploadManager" type="Node" parent="."]
+script = ExtResource("2_0xm2m")
+
+[connection signal="pressed" from="uploadButton" to="." method="_on_button_pressed"]
