@@ -23,6 +23,16 @@ func _on_button_pressed() -> void:
 	else:
 		image_upload_manager.open_file_picker()
 
-func _on_image_loaded(image: Image) -> void:
+func _on_image_loaded(image: Image) -> void: #itch
 	var texture := ImageTexture.create_from_image(image)
 	uploaded_image.texture = texture
+	print("image_loaded and shown")
+
+
+func _on_file_dialog_file_selected(path: String) -> void: #local
+	print("selected file: ", path)
+	pass # Replace with function body.
+
+
+func _on_create_scene_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/scene_creator.tscn")
