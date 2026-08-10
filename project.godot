@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="WorldMetadataEditor"
-run/main_scene="uid://c6euumsoulpst"
+run/main_scene="uid://c3pgpfqlskacp"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Global="*res://scripts/global.gd"
 
 [debug]
 
