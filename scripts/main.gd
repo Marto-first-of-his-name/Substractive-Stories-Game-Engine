@@ -4,7 +4,7 @@ extends Node2D
 @onready var uploaded_image: TextureRect = $uploadedImage
 @onready var file_dialog: FileDialog = $FileDialog
 
-@export var is_game_local = false #true if tool is to be ran locally, false if it's for itch
+@export var is_game_local:bool = false #true if tool is to be ran locally, false if it's for itch
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -12,9 +12,6 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 
 func _on_button_pressed() -> void:

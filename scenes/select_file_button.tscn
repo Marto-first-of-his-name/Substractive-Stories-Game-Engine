@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dstglwg4rflj6"]
+
+[ext_resource type="Script" uid="uid://crcqtctckm4cs" path="res://scripts/select_file_button.gd" id="1_p0dng"]
+
+[node name="SelectFileButton" type="Control"]
+custom_minimum_size = Vector2(61, 31)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 87.0
+offset_bottom = 31.0
+script = ExtResource("1_p0dng")

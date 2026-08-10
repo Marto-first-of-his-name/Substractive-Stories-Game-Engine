@@ -1,21 +1,19 @@
 extends Node
 class_name Scene
 
-var scene_name: String #the name of this scene
-var previous_scene: Scene #the scene that led here (needs to be given to this scene by the previous one)
-
+var id: int
+var scene_name: String
+var default_image_path: String
 var default_sentence: String
-var correct_sentences: Array[String]
-var next_scenes: Array[Scene]
+var correct_sentences: Array[CorrectSentence]
+var max_word_count: int = 0
+
+var previous_scene: Scene #the scene that led here (needs to be given to this scene by the previous one)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-func go_to_next_scene():
+func go_to_next_scene() -> void:
 	pass

@@ -1,0 +1,99 @@
+[gd_scene load_steps=4 format=3 uid="uid://dy76e2r74s4tt"]
+
+[ext_resource type="Script" uid="uid://dpk2hk1dtfrs0" path="res://scenes/scene_creator.gd" id="1_u5yxf"]
+[ext_resource type="Texture2D" uid="uid://bix4h1mbf3vs4" path="res://icon.svg" id="2_ou1tl"]
+[ext_resource type="Script" uid="uid://crcqtctckm4cs" path="res://scenes/add_image_button.gd" id="2_uc2vv"]
+
+[node name="SceneCreator" type="Node2D"]
+script = ExtResource("1_u5yxf")
+
+[node name="AddDefaultImageButton" type="Button" parent="."]
+offset_left = 36.0
+offset_top = 58.0
+offset_right = 212.0
+offset_bottom = 89.0
+text = "Choose default image"
+script = ExtResource("2_uc2vv")
+metadata/_custom_type_script = "uid://crcqtctckm4cs"
+
+[node name="DefaultSentenceText" type="TextEdit" parent="."]
+offset_left = 218.0
+offset_top = 57.0
+offset_right = 1126.0
+offset_bottom = 92.0
+placeholder_text = "Edit the default sentence."
+
+[node name="CorrectSentencesContainer" type="VBoxContainer" parent="."]
+clip_contents = true
+offset_left = 29.0
+offset_top = 161.0
+offset_right = 1132.0
+offset_bottom = 595.0
+
+[node name="AddCorrectSentenceButton" type="Button" parent="CorrectSentencesContainer"]
+layout_mode = 2
+tooltip_text = "⚠️Use the dropdown on the right to link a correct sentence to the next scene.
+      If you don't add an image to a correct sentence it will use the default image."
+text = "Add correct sentence"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CorrectSentencesContainer"]
+layout_mode = 2
+
+[node name="DefaultSentenceText" type="TextEdit" parent="CorrectSentencesContainer/HBoxContainer"]
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+placeholder_text = "Edit the default sentence."
+wrap_mode = 1
+scroll_fit_content_height = true
+
+[node name="Button2" type="Button" parent="CorrectSentencesContainer/HBoxContainer"]
+layout_mode = 2
+text = "add image"
+
+[node name="Button" type="Button" parent="CorrectSentencesContainer/HBoxContainer"]
+layout_mode = 2
+text = "delete entry"
+
+[node name="OptionButton" type="OptionButton" parent="CorrectSentencesContainer/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Select next scene"
+fit_to_longest_item = false
+item_count = 2
+popup/item_0/text = "ewrhger"
+popup/item_0/icon = ExtResource("2_ou1tl")
+popup/item_0/id = 0
+popup/item_1/text = "fsadfagwerg"
+popup/item_1/id = 1
+
+[node name="MaxWordCountSpinBox" type="SpinBox" parent="."]
+offset_left = 803.0
+offset_top = 11.0
+offset_right = 889.5625
+offset_bottom = 42.0
+
+[node name="TextEdit" type="TextEdit" parent="."]
+custom_minimum_size = Vector2(600, 0)
+offset_left = 37.0
+offset_top = 7.0
+offset_right = 114.0
+offset_bottom = 42.0
+tooltip_text = "You can rename the scene's name here"
+text = "Scene 1"
+wrap_mode = 1
+
+[node name="Label" type="Label" parent="."]
+offset_left = 673.0
+offset_top = 12.0
+offset_right = 799.0
+offset_bottom = 35.0
+text = "Max word count"
+
+[node name="SaveAndExitButton" type="Button" parent="."]
+offset_left = 31.0
+offset_top = 607.0
+offset_right = 142.0
+offset_bottom = 638.0
+text = "Save and exit"
+
+[connection signal="text_changed" from="DefaultSentenceText" to="." method="_on_default_sentence_text_text_changed"]
+[connection signal="pressed" from="CorrectSentencesContainer/AddCorrectSentenceButton" to="." method="_on_add_correct_sentence_button_pressed"]

@@ -58,14 +58,6 @@ button_text = "Select default image"
 folder_to_read = "res://game_assets/images/"
 metadata/_custom_type_script = "uid://crcqtctckm4cs"
 
-[node name="defaultImageLabel" type="Label" parent="."]
-offset_left = 44.0
-offset_top = 93.0
-offset_right = 170.0
-offset_bottom = 116.0
-theme_override_font_sizes/font_size = 10
-text = "No default image selected"
-
 [node name="CorrectSentencesContainer" type="VBoxContainer" parent="."]
 clip_contents = true
 offset_left = 29.0
@@ -113,15 +105,13 @@ text = "delete entry"
 [node name="OptionButton" type="OptionButton" parent="CorrectSentencesContainer/HBoxContainer"]
 layout_mode = 2
 tooltip_text = "Select next scene"
-autowrap_mode = 3
 fit_to_longest_item = false
 item_count = 2
 popup/item_0/text = "ewrhger"
 popup/item_0/icon = ExtResource("2_ou1tl")
-popup/item_0/id = 2
-popup/item_0/disabled = true
+popup/item_0/id = 0
 popup/item_1/text = "fsadfagwerg"
-popup/item_1/id = 0
+popup/item_1/id = 1
 
 [node name="SaveAndExitButton" type="Button" parent="."]
 offset_left = 31.0

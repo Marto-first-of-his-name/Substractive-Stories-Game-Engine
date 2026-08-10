@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dstglwg4rflj6"]
-
-[ext_resource type="Script" uid="uid://crcqtctckm4cs" path="res://scenes/add_image_button.gd" id="1_318mv"]
-
-[node name="AddImageButton" type="Button"]
-offset_right = 8.0
-offset_bottom = 8.0
-text = "AddImage"
-script = ExtResource("1_318mv")

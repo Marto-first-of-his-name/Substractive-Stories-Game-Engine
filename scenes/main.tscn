@@ -43,6 +43,20 @@ offset_bottom = 276.0
 text = "Edit Scene
 "
 
+[node name="ExportGlfrButton" type="Button" parent="."]
+offset_left = 39.0
+offset_top = 525.0
+offset_right = 214.0
+offset_bottom = 556.0
+text = "Export game as .GLFR"
+
+[node name="PlayGameButton" type="Button" parent="."]
+offset_left = 475.0
+offset_top = 108.0
+offset_right = 610.0
+offset_bottom = 139.0
+text = "Play .GLFR game"
+
 [connection signal="pressed" from="createSceneButton" to="." method="_on_create_scene_button_pressed"]
 [connection signal="pressed" from="uploadButton" to="." method="_on_button_pressed"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]

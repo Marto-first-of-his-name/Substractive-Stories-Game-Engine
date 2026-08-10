@@ -25,15 +25,15 @@ func open_file_picker() -> void:
 	# Create the browser file input and trigger it.
 	JavaScriptBridge.eval("""
         (() => {
-            let input = document.getElementById("godot-image-upload");
+			let input = document.getElementById("godot-image-upload");
 
             if (!input) {
-                input = document.createElement("input");
-                input.type = "file";
-                input.id = "godot-image-upload";
-                input.accept = "image/png,image/jpeg";
+				input = document.createElement("input");
+				input.type = "file";
+				input.id = "godot-image-upload";
+				input.accept = "image/png,image/jpeg";
 
-                input.addEventListener("change", async () => {
+				input.addEventListener("change", async () => {
                     const file = input.files[0];
 
                     if (!file) {
@@ -46,7 +46,7 @@ func open_file_picker() -> void:
                         window.godot_image_upload_callback(buffer);
                     }
 
-                    input.value = "";
+					input.value = "";
                 });
 
                 document.body.appendChild(input);
