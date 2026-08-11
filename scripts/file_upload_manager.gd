@@ -40,19 +40,17 @@ func open_file_picker(
 						return;
 					}
 
-					const result = [];
-
-					for (const file of files) {
+					for (let i = 0; i < files.length; i++) {
+						const file = files[i];
 						const buffer = await file.arrayBuffer();
 
-						result.push({
-							name: file.name,
-							buffer: buffer
-						});
-					}
-
-					if (window.godot_file_upload_callback) {
-						window.godot_file_upload_callback(result);
+						if (window.godot_file_upload_callback) {
+							window.godot_file_upload_callback(
+								file.name,
+								buffer,
+								i === files.length - 1
+							);
+						}
 					}
 
 					input.value = "";
@@ -68,26 +66,30 @@ func open_file_picker(
 	""" % [accepted_file_types, multiple])
 
 func _on_files_selected(args: Array) -> void:
-	if args.is_empty():
+	if args.size() < 3:
+		push_error("Invalid file upload callback.")
 		return
 
-	var js_files = args[0]
-	var files: Array = []
+	var filename: String = args[0]
+	var js_buffer = args[1]
+	var is_last: bool = args[2]
 
-	for file in js_files:
-		var filename: String = file.name
-		var js_buffer = file.buffer
+	if not JavaScriptBridge.is_js_buffer(js_buffer):
+		push_error("Received file data is not an ArrayBuffer.")
+		return
 
-		if not JavaScriptBridge.is_js_buffer(js_buffer):
-			push_error("Received file data is not an ArrayBuffer.")
-			continue
+	var data := JavaScriptBridge.js_buffer_to_packed_byte_array(js_buffer)
 
-		var data := JavaScriptBridge.js_buffer_to_packed_byte_array(js_buffer)
+	if data.is_empty():
+		push_error("Received empty file: " + filename)
+		return
 
-		files.append({
-			"name": filename,
-			"data": data
-		})
+	var files: Array = [{
+		"name": filename,
+		"data": data
+	}]
+
+	save_uploaded_files(files)
 
 	files_loaded.emit(files)
 
