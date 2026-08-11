@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bbh0swgi7ccgw"]
+[gd_scene load_steps=3 format=3 uid="uid://bbh0swgi7ccgw"]
 
 [ext_resource type="Script" uid="uid://cok16b5ngl0au" path="res://scripts/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="Script" uid="uid://srlggmrffjl4" path="res://scripts/file_upload_manager.gd" id="2_ekxnf"]
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_l6cm7")
@@ -46,7 +47,10 @@ offset_right = 436.0
 offset_bottom = 46.0
 text = "Here you can create a new game."
 
+[node name="FileUploadManager" type="Node" parent="."]
+script = ExtResource("2_ekxnf")
+
 [connection signal="pressed" from="CreateNewButton" to="." method="_on_create_new_button_pressed"]
 [connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="ImportGlfrButton" to="." method="_on_import_glfr_button_pressed"]
-[connection signal="file_selected" from="ImportGlfrButton/FileDialogImport" to="." method="_on_file_dialog_file_selected"]
+[connection signal="file_selected" from="ImportGlfrButton/FileDialogImport" to="." method="_on_file_dialog_import_file_selected"]

@@ -2,18 +2,29 @@ extends Node2D
 
 @onready var file_dialog_import: FileDialog = $ImportGlfrButton/FileDialogImport
 @onready var exit_button: Button = $ExitButton
+@onready var file_upload_manager: Node = $FileUploadManager
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if not Global.game_controller.is_game_local:
 		exit_button.queue_free()
+		file_upload_manager.project_file_loaded.connect(_on_project_file_loaded)
 	pass # Replace with function body.
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
+func _on_project_file_loaded(data: PackedByteArray) -> void:
+	var temporary_path := "user://import.glfr"
+	
+	var file := FileAccess.open(temporary_path, FileAccess.WRITE)
+	
+	if file == null:
+		print("Failed to create temporary import file")
+		return
+	
+	file.store_buffer(data)
+	file.close()
+	
+	Global.game_controller.start_project_editor(import_project(temporary_path))
+	return 
 
 func _on_create_new_button_pressed() -> void:
 	Global.game_controller.start_project_editor(null)
@@ -23,8 +34,7 @@ func _on_import_glfr_button_pressed() -> void:
 	if Global.game_controller.is_game_local:
 		file_dialog_import.popup_centered()
 	else:
-		#web
-		pass
+		file_upload_manager.open_file_picker()
 
 func import_project(path: String) -> GameGLFR:
 	var reader := ZIPReader.new()
@@ -42,7 +52,7 @@ func import_project(path: String) -> GameGLFR:
 		return
 	
 	var json_text := json_bytes.get_string_from_utf8()
-	var data = JSON.parse_string(json_text)
+	var data :Dictionary = JSON.parse_string(json_text)
 	
 	if data==null:
 		print("Failed to parse project.json")
@@ -54,7 +64,7 @@ func import_project(path: String) -> GameGLFR:
 	return GameGLFR.from_dict(data)
 
 
-func _on_file_dialog_file_selected(path: String) -> void:
+func _on_file_dialog_import_file_selected(path: String) -> void:
 	Global.game_controller.start_project_editor(import_project(path))
 
 
