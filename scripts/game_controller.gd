@@ -2,7 +2,7 @@ class_name GameController extends Node2D
 
 var current_gui: Node
 var current_project: GameGLFR
-var is_game_local:bool = false #true if tool is to be ran locally, false if it's for itch
+var is_game_local:bool = true #true if tool is to be ran locally, false if it's for itch
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -27,6 +27,7 @@ func create_or_edit_scene(scene: Scene) -> void:
 
 func return_to_main_menu() -> void:
 	var main_menu := preload("res://scenes/main_menu.tscn")
+	current_project = null
 	free_current_gui()
 	current_gui = main_menu.instantiate()
 	add_child(current_gui)

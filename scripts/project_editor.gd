@@ -33,9 +33,9 @@ func populate_scene_picker(scene_picker: OptionButton) -> void:
 	if current_project:
 		var scenes := current_project.get_scenes()
 		for s in scenes:
-			scene_picker.add_item(s.name, s.id)
+			scene_picker.add_item(str(s.get_id(), "-", s.scene_name), s.id)
 
-func _on_button_pressed() -> void:
+func _on_upload_button_pressed() -> void:
 	if Global.game_controller.is_game_local:
 		file_dialog_upload.popup_centered()
 	else:
@@ -143,3 +143,7 @@ func _on_game_name_line_edit_text_changed(new_text: String) -> void:
 
 func _on_file_dialog_export_file_selected(path: String) -> void:
 	export_project(path)
+
+
+func _on_main_menu_button_pressed() -> void:
+	Global.game_controller.return_to_main_menu()

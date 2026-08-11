@@ -70,7 +70,7 @@ custom_minimum_size = Vector2(1152, 0)
 offset_top = 129.0
 offset_right = 1152.0
 offset_bottom = 160.0
-tooltip_text = "⚠️Use the dropdown on the right to link a correct sentence to the next scene.
+tooltip_text = "Use the dropdown on the right to link a correct sentence to the next scene.
       If you don't add an image to a correct sentence it will use the default image."
 text = "Add correct sentence"
 

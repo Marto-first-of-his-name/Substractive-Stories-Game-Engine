@@ -12,18 +12,25 @@ offset_right = 164.0
 offset_bottom = 94.0
 text = "Create new game"
 
+[node name="ExitButton" type="Button" parent="."]
+offset_left = 23.0
+offset_top = 594.0
+offset_right = 60.0
+offset_bottom = 625.0
+text = "Exit"
+
 [node name="ImportGlfrButton" type="Button" parent="."]
 offset_left = 17.0
 offset_top = 216.0
 offset_right = 135.0
 offset_bottom = 247.0
-disabled = true
 text = "Import .GLFR"
 
-[node name="FileDialog" type="FileDialog" parent="ImportGlfrButton"]
+[node name="FileDialogImport" type="FileDialog" parent="ImportGlfrButton"]
 title = "Open a File"
 file_mode = 0
 access = 2
+filters = PackedStringArray("*.glfr ; GLFR Project; application/octet-stream")
 
 [node name="Label2" type="Label" parent="."]
 offset_left = 18.0
@@ -40,5 +47,6 @@ offset_bottom = 46.0
 text = "Here you can create a new game."
 
 [connection signal="pressed" from="CreateNewButton" to="." method="_on_create_new_button_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="ImportGlfrButton" to="." method="_on_import_glfr_button_pressed"]
-[connection signal="file_selected" from="ImportGlfrButton/FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="file_selected" from="ImportGlfrButton/FileDialogImport" to="." method="_on_file_dialog_file_selected"]

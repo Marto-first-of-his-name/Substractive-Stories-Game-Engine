@@ -34,3 +34,14 @@ func to_dict() -> Dictionary:
 		"correct_sentences": sentences_data,
 		"max_word_count": max_word_count,
 	}
+
+static func from_dict(data: Dictionary) -> Scene:
+	var s := Scene.new()
+	s.id = data["id"]
+	s.scene_name = data["scene_name"]
+	s.default_image_path = data["default_image_path"]
+	s.default_sentence = data["default_sentence"]
+	for cs_data:Dictionary in data["correct_sentences"]:
+		s.correct_sentences.append(CorrectSentence.from_dict(cs_data))
+	s.max_word_count = data["max_word_count"]
+	return s

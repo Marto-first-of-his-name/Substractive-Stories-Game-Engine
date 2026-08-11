@@ -99,6 +99,13 @@ title = "Open a File"
 file_mode = 0
 access = 2
 
+[node name="MainMenuButton" type="Button" parent="."]
+offset_left = 939.0
+offset_top = 573.0
+offset_right = 1112.0
+offset_bottom = 604.0
+text = "Return to Main Menu"
+
 [node name="FileDialogExport" type="FileDialog" parent="."]
 access = 2
 filters = PackedStringArray("*.glfr ; GLFR Project; application/octet-stream")
@@ -117,7 +124,7 @@ offset_left = 50.0
 offset_top = 484.0
 offset_right = 659.0
 offset_bottom = 507.0
-text = "⚠️ Make sure to export your project before leaving so you can import it next time."
+text = "Make sure to export your project before leaving so you can import it next time."
 
 [node name="Label5" type="Label" parent="."]
 offset_left = 50.0
@@ -155,4 +162,5 @@ text = "You can set the first scene here and try the game"
 [connection signal="item_selected" from="StartScenePickerOptionButton" to="." method="_on_start_scene_picker_option_button_item_selected"]
 [connection signal="pressed" from="ExportGlfrButton" to="." method="_on_export_glfr_button_pressed"]
 [connection signal="file_selected" from="FileDialogUpload" to="." method="_on_file_dialog_file_selected"]
+[connection signal="pressed" from="MainMenuButton" to="." method="_on_main_menu_button_pressed"]
 [connection signal="file_selected" from="FileDialogExport" to="." method="_on_file_dialog_export_file_selected"]

@@ -9,7 +9,7 @@ var available_scenes: Array[Scene]
 @onready var select_default_image_button: SelectFileButton = $SelectDefaultImageButton
 @onready var default_image_label: Label = $defaultImageLabel
 @onready var default_sentence_text: TextEdit = $DefaultSentenceText
-@onready var add_correct_sentence_button: Button = $CorrectSentencesContainer/AddCorrectSentenceButton
+@onready var add_correct_sentence_button: Button = $AddCorrectSentenceButton
 @onready var correct_sentences_container: VBoxContainer = $ScrollContainer/MarginContainer/CorrectSentencesContainer
 @onready var max_word_count_spin_box: SpinBox = $MaxWordCountSpinBox
 
@@ -164,10 +164,9 @@ func create_correct_sentence(cs: CorrectSentence, is_recreation: bool) -> void:
 		var idx := 1
 		for s in available_scenes:
 			if is_recreation:
-				if cs.next_scene == s:
+				if cs.next_scene_id == s.get_id():
 					selected_idx = idx
-			select_next_option_button.add_item(str(s.id) + s.scene_name)
-			select_next_option_button.set_item_id(idx, s.id)
+			select_next_option_button.add_item(str(s.get_id(), "-", s.scene_name), s.get_id())
 			idx += 1
 	select_next_option_button.select(selected_idx)
 
@@ -189,7 +188,7 @@ func _on_next_scene_select(index:int, select_next_button:OptionButton, correct_s
 	var id := select_next_button.get_item_id(index)
 	var s := Global.game_controller.get_scene_from_id(id)
 	if s:
-		correct_sentence.next_scene = s
+		correct_sentence.next_scene_id = s.get_id()
 		print("next scene saved")
 	
 
