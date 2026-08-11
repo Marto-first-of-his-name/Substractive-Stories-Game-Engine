@@ -4,6 +4,8 @@ class_name CorrectSentence
 var id: int
 var sentence: String
 var follow_up_sentence: String
+var karma_judgement: String
+var karma : int
 var image_path: String
 var next_scene: Scene
 

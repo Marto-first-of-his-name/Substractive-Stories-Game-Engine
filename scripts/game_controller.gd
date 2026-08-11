@@ -1,15 +1,15 @@
 class_name GameController extends Node2D
 
 var current_gui: Node
-var scenes: Array[Scene]
-var next_available_scene_id := 1
-
+var current_project: GameGLFR
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Global.game_controller = self
 	return_to_main_menu()
 
+func get_current_project() -> GameGLFR:
+	return current_project
 
 
 func create_or_edit_scene(scene: Scene) -> void:
@@ -21,27 +21,48 @@ func create_or_edit_scene(scene: Scene) -> void:
 		current_gui.scene = scene
 		current_gui.display_scene_to_edit()
 	else:
-		current_gui.make_new_scene(next_available_scene_id)
-		next_available_scene_id += 1
+		current_gui.make_new_scene(current_project.next_available_scene_id)
+		current_project.next_available_scene_id += 1
 
 func return_to_main_menu() -> void:
-	var main_menu := preload("res://scenes/main.tscn")
+	var main_menu := preload("res://scenes/main_menu.tscn")
 	free_current_gui()
 	current_gui = main_menu.instantiate()
 	add_child(current_gui)
+	
+func return_to_project_editor() -> void:
+	var project_editor := preload("res://scenes/project_editor.tscn")
+	free_current_gui()
+	current_gui = project_editor.instantiate()
+	add_child(current_gui)
+	if current_project:
+		current_gui.current_project = current_project
+		current_gui.display_project_to_edit()
 
+func start_project_editor(project: GameGLFR) -> void:
+	var project_editor := preload("res://scenes/project_editor.tscn")
+	free_current_gui()
+	current_gui = project_editor.instantiate()
+	add_child(current_gui)
+	if project:
+		current_project = project
+		current_gui.current_project = current_project
+		current_gui.display_project_to_edit()
+	else:
+		current_project = GameGLFR.new()
+		current_gui.current_project = current_project
 
 func free_current_gui() -> void:
 	if current_gui:
 		current_gui.queue_free()
 
 func save_scene(scene:Scene) -> void:
-	for s in scenes:
+	for s in current_project.get_scenes():
 		if s.id == scene.id:
 			replace_scene(s, scene)
 			return
 	# if the scene is new:
-	scenes.append(scene)
+	current_project.add_scene(scene)
 
 
 func replace_scene(scene_old: Scene, scene_new: Scene) -> void:
@@ -55,7 +76,7 @@ func get_scene_from_id(id:int) -> Scene:
 	if id == 0:
 		print("error: id 0 should not be used for scenes as it is reserved for placeholders")
 		return
-	for s in scenes:
+	for s in current_project.get_scenes():
 		if s.id == id:
 			return s
 	return null

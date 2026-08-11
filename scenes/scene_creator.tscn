@@ -38,11 +38,11 @@ offset_bottom = 43.0
 
 [node name="DefaultSentenceText" type="TextEdit" parent="."]
 custom_minimum_size = Vector2(900, 0)
-offset_left = 213.0
-offset_top = 58.0
-offset_right = 1113.0
-offset_bottom = 89.0
-placeholder_text = "Edit the default sentence."
+offset_left = 229.0
+offset_top = 59.0
+offset_right = 1129.0
+offset_bottom = 90.0
+placeholder_text = "Write default sentence."
 
 [node name="SelectDefaultImageButton" type="Control" parent="."]
 custom_minimum_size = Vector2(165, 31)
@@ -53,7 +53,7 @@ offset_top = 59.0
 offset_right = 211.0
 offset_bottom = 90.0
 script = ExtResource("3_uc2vv")
-button_text = "Select default image"
+button_text = "Select default image*"
 folder_to_read = "res://game_assets/images/"
 metadata/_custom_type_script = "uid://crcqtctckm4cs"
 

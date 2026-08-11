@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbh0swgi7ccgw"]
+
+[ext_resource type="Script" uid="uid://cok16b5ngl0au" path="res://scripts/main_menu.gd" id="1_l6cm7"]
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_l6cm7")
+
+[node name="CreateNewButton" type="Button" parent="."]
+offset_left = 21.0
+offset_top = 63.0
+offset_right = 164.0
+offset_bottom = 94.0
+text = "Create new game"
+
+[node name="ImportGlfrButton" type="Button" parent="."]
+offset_left = 17.0
+offset_top = 216.0
+offset_right = 135.0
+offset_bottom = 247.0
+disabled = true
+text = "Import .GLFR"
+
+[node name="FileDialog" type="FileDialog" parent="ImportGlfrButton"]
+title = "Open a File"
+file_mode = 0
+access = 2
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 18.0
+offset_top = 180.0
+offset_right = 433.0
+offset_bottom = 203.0
+text = "Here you can import a previously exported project."
+
+[node name="Label3" type="Label" parent="."]
+offset_left = 21.0
+offset_top = 23.0
+offset_right = 436.0
+offset_bottom = 46.0
+text = "Here you can create a new game."
+
+[connection signal="pressed" from="CreateNewButton" to="." method="_on_create_new_button_pressed"]
+[connection signal="pressed" from="ImportGlfrButton" to="." method="_on_import_glfr_button_pressed"]
+[connection signal="file_selected" from="ImportGlfrButton/FileDialog" to="." method="_on_file_dialog_file_selected"]

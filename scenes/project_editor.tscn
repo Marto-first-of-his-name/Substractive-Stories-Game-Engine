@@ -1,0 +1,153 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6euumsoulpst"]
+
+[ext_resource type="Script" uid="uid://b02480fs3gybr" path="res://scripts/project_editor.gd" id="1_nmxbk"]
+[ext_resource type="Script" uid="uid://4j73lus1k3kq" path="res://scripts/imageUploadManager.gd" id="2_u4f81"]
+
+[node name="ProjectEditor" type="Node2D"]
+script = ExtResource("1_nmxbk")
+is_game_local = true
+
+[node name="GameNameLineEdit" type="LineEdit" parent="."]
+offset_left = 45.0
+offset_top = 11.0
+offset_right = 159.0
+offset_bottom = 42.0
+placeholder_text = "Game name"
+expand_to_text_length = true
+
+[node name="uploadButton" type="Button" parent="."]
+offset_left = 48.0
+offset_top = 110.0
+offset_right = 146.0
+offset_bottom = 141.0
+text = "Import files"
+
+[node name="createSceneButton" type="Button" parent="."]
+offset_left = 44.0
+offset_top = 222.0
+offset_right = 152.0
+offset_bottom = 253.0
+text = "Create new scene"
+
+[node name="EditScenePickerOptionButton" type="OptionButton" parent="."]
+offset_left = 43.0
+offset_top = 267.0
+offset_right = 235.0
+offset_bottom = 298.0
+selected = 0
+item_count = 1
+popup/item_0/text = "Choose scene to edit"
+popup/item_0/id = 0
+
+[node name="editSceneButton" type="Button" parent="."]
+offset_left = 250.0
+offset_top = 267.0
+offset_right = 338.0
+offset_bottom = 298.0
+text = "Edit Scene
+"
+
+[node name="deleteSceneButton" type="Button" parent="."]
+offset_left = 347.0
+offset_top = 267.0
+offset_right = 455.0
+offset_bottom = 298.0
+disabled = true
+text = "Delete Scene"
+
+[node name="StartScenePickerOptionButton" type="OptionButton" parent="."]
+offset_left = 46.0
+offset_top = 396.0
+offset_right = 225.0
+offset_bottom = 427.0
+selected = 0
+item_count = 1
+popup/item_0/text = "Choose start scene"
+popup/item_0/id = 0
+
+[node name="PlayGameButton" type="Button" parent="."]
+offset_left = 250.0
+offset_top = 397.0
+offset_right = 343.0
+offset_bottom = 428.0
+text = "Play game"
+
+[node name="ExportGlfrButton" type="Button" parent="."]
+offset_left = 48.0
+offset_top = 511.0
+offset_right = 223.0
+offset_bottom = 542.0
+disabled = true
+text = "Export game as .GLFR"
+
+[node name="ExportHtml" type="Button" parent="."]
+offset_left = 48.0
+offset_top = 575.0
+offset_right = 220.0
+offset_bottom = 606.0
+disabled = true
+text = "Export game as .html"
+
+[node name="ExportExe" type="Button" parent="."]
+offset_left = 248.0
+offset_top = 575.0
+offset_right = 411.0
+offset_bottom = 606.0
+disabled = true
+text = "Export game as .exe"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+file_mode = 0
+access = 2
+
+[node name="uploadedImage" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ImageUploadManager" type="Node" parent="."]
+script = ExtResource("2_u4f81")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 50.0
+offset_top = 484.0
+offset_right = 659.0
+offset_bottom = 507.0
+text = "⚠️ Make sure to export your project before leaving so you can import it next time."
+
+[node name="Label5" type="Label" parent="."]
+offset_left = 50.0
+offset_top = 549.0
+offset_right = 659.0
+offset_bottom = 572.0
+text = "If you are done you can also export the actual game as .html or .exe"
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 47.0
+offset_top = 86.0
+offset_right = 535.0
+offset_bottom = 109.0
+text = "Start by importing the images you will want to use in the game."
+
+[node name="Label3" type="Label" parent="."]
+offset_left = 45.0
+offset_top = 195.0
+offset_right = 533.0
+offset_bottom = 218.0
+text = "Then you can create scenes and edit them."
+
+[node name="Label4" type="Label" parent="."]
+offset_left = 44.0
+offset_top = 366.0
+offset_right = 532.0
+offset_bottom = 389.0
+text = "You can set the first scene here and try the game"
+
+[connection signal="pressed" from="uploadButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="createSceneButton" to="." method="_on_create_scene_button_pressed"]
+[connection signal="item_selected" from="EditScenePickerOptionButton" to="." method="_on_edit_scene_picker_option_button_item_selected"]
+[connection signal="pressed" from="editSceneButton" to="." method="_on_edit_scene_button_pressed"]
+[connection signal="item_selected" from="StartScenePickerOptionButton" to="." method="_on_start_scene_picker_option_button_item_selected"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
