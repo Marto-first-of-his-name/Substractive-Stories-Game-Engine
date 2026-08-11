@@ -6,6 +6,17 @@ var scenes: Array[Scene]
 var next_available_scene_id := 1
 var start_scene: Scene
 
+func to_dict() -> Dictionary:
+	var scenes_data: Array[Dictionary]
+	for s in scenes:
+		scenes_data.append(s.to_dict())
+	
+	return {
+		"game_name": game_name,
+		"scenes": scenes_data,
+		"next_available_scene_id": next_available_scene_id,
+		"start_scene_id": start_scene.get_id() if start_scene != null else -1
+	}
 
 func get_scenes() -> Array[Scene]:
 	return scenes

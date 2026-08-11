@@ -22,12 +22,12 @@ func make_new_scene(next_available_scene_id: int) -> void:
 	scene = Scene.new()
 	scene.id = next_available_scene_id
 	scene_id_label.text = str("S-",scene.id)
-	scene.name = str("Scene ",scene.id)
-	scene_name_text_edit.text = scene.name
+	scene.scene_name = str("Scene ",scene.id)
+	scene_name_text_edit.text = scene.scene_name
 
 func display_scene_to_edit() -> void:
 	scene_id_label.text = str("S-",scene.id)
-	scene_name_text_edit.text = scene.name
+	scene_name_text_edit.text = scene.scene_name
 	if scene.default_image_path:
 		default_image_label.text = scene.default_image_path.get_file()
 	else:
@@ -166,7 +166,7 @@ func create_correct_sentence(cs: CorrectSentence, is_recreation: bool) -> void:
 			if is_recreation:
 				if cs.next_scene == s:
 					selected_idx = idx
-			select_next_option_button.add_item(str(s.id) + s.name)
+			select_next_option_button.add_item(str(s.id) + s.scene_name)
 			select_next_option_button.set_item_id(idx, s.id)
 			idx += 1
 	select_next_option_button.select(selected_idx)
@@ -233,7 +233,7 @@ func _on_max_word_count_spin_box_value_changed(value: float) -> void:
 	print("max word count saved: ", value)
 
 func _on_scene_name_text_edit_text_changed() -> void:
-	scene.name = scene_name_text_edit.text
+	scene.scene_name = scene_name_text_edit.text
 	print("Scene name saved")
 
 

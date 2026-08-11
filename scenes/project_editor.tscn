@@ -5,7 +5,6 @@
 
 [node name="ProjectEditor" type="Node2D"]
 script = ExtResource("1_nmxbk")
-is_game_local = true
 
 [node name="GameNameLineEdit" type="LineEdit" parent="."]
 offset_left = 45.0
@@ -77,7 +76,6 @@ offset_left = 48.0
 offset_top = 511.0
 offset_right = 223.0
 offset_bottom = 542.0
-disabled = true
 text = "Export game as .GLFR"
 
 [node name="ExportHtml" type="Button" parent="."]
@@ -96,10 +94,14 @@ offset_bottom = 606.0
 disabled = true
 text = "Export game as .exe"
 
-[node name="FileDialog" type="FileDialog" parent="."]
+[node name="FileDialogUpload" type="FileDialog" parent="."]
 title = "Open a File"
 file_mode = 0
 access = 2
+
+[node name="FileDialogExport" type="FileDialog" parent="."]
+access = 2
+filters = PackedStringArray("*.glfr ; GLFR Project; application/octet-stream")
 
 [node name="uploadedImage" type="TextureRect" parent="."]
 offset_right = 40.0
@@ -145,9 +147,12 @@ offset_right = 532.0
 offset_bottom = 389.0
 text = "You can set the first scene here and try the game"
 
+[connection signal="text_changed" from="GameNameLineEdit" to="." method="_on_game_name_line_edit_text_changed"]
 [connection signal="pressed" from="uploadButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="createSceneButton" to="." method="_on_create_scene_button_pressed"]
 [connection signal="item_selected" from="EditScenePickerOptionButton" to="." method="_on_edit_scene_picker_option_button_item_selected"]
 [connection signal="pressed" from="editSceneButton" to="." method="_on_edit_scene_button_pressed"]
 [connection signal="item_selected" from="StartScenePickerOptionButton" to="." method="_on_start_scene_picker_option_button_item_selected"]
-[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="pressed" from="ExportGlfrButton" to="." method="_on_export_glfr_button_pressed"]
+[connection signal="file_selected" from="FileDialogUpload" to="." method="_on_file_dialog_file_selected"]
+[connection signal="file_selected" from="FileDialogExport" to="." method="_on_file_dialog_export_file_selected"]
