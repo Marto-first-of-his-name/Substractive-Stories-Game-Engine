@@ -1,45 +1,58 @@
 extends Node
 class_name FileUploadManager
 
-signal project_file_loaded(data: PackedByteArray)
+signal files_loaded(files: Array)
 
 var _file_callback: JavaScriptObject
 
 
 func _ready() -> void:
 	if OS.has_feature("web"):
-		_file_callback = JavaScriptBridge.create_callback(_on_file_selected)
+		_file_callback = JavaScriptBridge.create_callback(_on_files_selected)
 
 
-func open_file_picker() -> void:
+func open_file_picker(
+	accepted_file_types: String,
+	multiple_files: bool
+) -> void:
 	if not OS.has_feature("web"):
-		push_warning("Project file import is only implemented for Web.")
+		push_warning("File upload is only implemented for Web.")
 		return
 
 	var window := JavaScriptBridge.get_interface("window")
-	window.godot_project_file_callback = _file_callback
+	window.godot_file_upload_callback = _file_callback
+
+	var multiple := "true" if multiple_files else "false"
 
 	JavaScriptBridge.eval("""
 		(() => {
-			let input = document.getElementById("godot-project-file-import");
+			let input = document.getElementById("godot-file-upload");
 
 			if (!input) {
 				input = document.createElement("input");
 				input.type = "file";
-				input.id = "godot-project-file-import";
-				input.accept = ".glfr";
+				input.id = "godot-file-upload";
 
 				input.addEventListener("change", async () => {
-					const file = input.files[0];
+					const files = input.files;
 
-					if (!file) {
+					if (!files || files.length === 0) {
 						return;
 					}
 
-					const buffer = await file.arrayBuffer();
+					const result = [];
 
-					if (window.godot_project_file_callback) {
-						window.godot_project_file_callback(buffer);
+					for (const file of files) {
+						const buffer = await file.arrayBuffer();
+
+						result.push({
+							name: file.name,
+							buffer: buffer
+						});
+					}
+
+					if (window.godot_file_upload_callback) {
+						window.godot_file_upload_callback(result);
 					}
 
 					input.value = "";
@@ -48,21 +61,108 @@ func open_file_picker() -> void:
 				document.body.appendChild(input);
 			}
 
+			input.accept = "%s";
+			input.multiple = %s;
 			input.click();
 		})();
-	""")
-	
-func _on_file_selected(args: Array) -> void:
+	""" % [accepted_file_types, multiple])
+
+func _on_files_selected(args: Array) -> void:
 	if args.is_empty():
 		return
 
-	var js_buffer = args[0]
+	var js_files = args[0]
+	var files: Array = []
 
-	if not JavaScriptBridge.is_js_buffer(js_buffer):
-		push_error("Received data is not an ArrayBuffer.")
+	for file in js_files:
+		var filename: String = file.name
+		var js_buffer = file.buffer
+
+		if not JavaScriptBridge.is_js_buffer(js_buffer):
+			push_error("Received file data is not an ArrayBuffer.")
+			continue
+
+		var data := JavaScriptBridge.js_buffer_to_packed_byte_array(js_buffer)
+
+		files.append({
+			"name": filename,
+			"data": data
+		})
+
+	files_loaded.emit(files)
+
+const ASSET_FOLDER := "user://game_assets"
+
+
+func save_uploaded_files(files: Array) -> void:
+	var dir := DirAccess.open("user://")
+
+	if dir == null:
+		push_error("Could not open user directory")
 		return
 
-	var data: PackedByteArray = \
-		JavaScriptBridge.js_buffer_to_packed_byte_array(js_buffer)
+	var error := dir.make_dir_recursive("game_assets")
 
-	project_file_loaded.emit(data)
+	if error != OK and error != ERR_ALREADY_EXISTS:
+		push_error("Could not create asset directory")
+		return
+
+	@warning_ignore("untyped_declaration")
+	for file in files:
+		var filename: String = file["name"]
+		var data: PackedByteArray = file["data"]
+
+		var path := get_unique_file_path(filename)
+
+		var output := FileAccess.open(path, FileAccess.WRITE)
+
+		if output == null:
+			push_error("Could not save file: " + path)
+			continue
+
+		output.store_buffer(data)
+		output.close()
+
+		print("Saved uploaded file: ", path)
+
+func get_unique_file_path(filename: String) -> String:
+	var path := ASSET_FOLDER.path_join(filename)
+
+	if not FileAccess.file_exists(path):
+		return path
+
+	var extension := filename.get_extension()
+	var basename := filename.get_basename()
+	var counter := 1
+
+	while true:
+		var new_filename: String
+
+		if extension.is_empty():
+			new_filename = "%s_%d" % [basename, counter]
+		else:
+			new_filename = "%s_%d.%s" % [
+				basename,
+				counter,
+				extension
+			]
+
+		path = ASSET_FOLDER.path_join(new_filename)
+
+		if not FileAccess.file_exists(path):
+			return path
+
+		counter += 1
+	return path
+
+func _create_asset_directory() -> void:
+	var dir := DirAccess.open("user://")
+
+	if dir == null:
+		push_error("Could not open user://")
+		return
+
+	var error := dir.make_dir_recursive("game_assets")
+
+	if error != OK and error != ERR_ALREADY_EXISTS:
+		push_error("Could not create game_assets: " + str(error))

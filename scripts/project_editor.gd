@@ -4,8 +4,7 @@ var scene_to_edit: Scene
 var current_project: GameGLFR
 
 @onready var game_name_line_edit: LineEdit = $GameNameLineEdit
-@onready var image_upload_manager: ImageUploadManager = $ImageUploadManager
-@onready var uploaded_image: TextureRect = $uploadedImage
+@onready var files_upload_manager: FileUploadManager = $FilesUploadManager
 @onready var file_dialog_upload: FileDialog = $FileDialogUpload
 @onready var file_dialog_export: FileDialog = $FileDialogExport
 @onready var edit_scene_picker: OptionButton = $EditScenePickerOptionButton
@@ -13,7 +12,7 @@ var current_project: GameGLFR
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	image_upload_manager.image_loaded.connect(_on_image_loaded)
+	files_upload_manager.files_loaded.connect(_on_files_loaded)
 
 func display_project_to_edit() -> void:
 	game_name_line_edit.text = current_project.game_name
@@ -39,17 +38,31 @@ func _on_upload_button_pressed() -> void:
 	if Global.game_controller.is_game_local:
 		file_dialog_upload.popup_centered()
 	else:
-		image_upload_manager.open_file_picker()
+		files_upload_manager.open_file_picker("image/png,image/jpeg,image/gif,image/webp", true)
 
-func _on_image_loaded(image: Image) -> void: #itch
-	var texture := ImageTexture.create_from_image(image)
-	uploaded_image.texture = texture
-	print("image_loaded and shown")
+func _on_files_loaded(files: Array) -> void: #itch
+	return
+	files_upload_manager.save_uploaded_files(files)
 
+func _on_file_dialog_upload_files_selected(paths: PackedStringArray) -> void:
+	var files: Array = []
 
-func _on_file_dialog_file_selected(path: String) -> void: #local
-	print("selected file: ", path)
-	pass # Replace with function body.
+	for path in paths:
+		var file := FileAccess.open(path, FileAccess.READ)
+
+		if file == null:
+			push_error("Could not open file: " + path)
+			continue
+
+		var data := file.get_buffer(file.get_length())
+		file.close()
+
+		files.append({
+			"name": path.get_file(),
+			"data": data
+		})
+
+	files_upload_manager.save_uploaded_files(files)
 
 
 func _on_create_scene_button_pressed() -> void:

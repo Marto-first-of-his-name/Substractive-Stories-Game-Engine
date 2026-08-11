@@ -20,18 +20,25 @@ offset_right = 60.0
 offset_bottom = 625.0
 text = "Exit"
 
+[node name="TryTemplateButton" type="Button" parent="."]
+offset_left = 819.0
+offset_top = 50.0
+offset_right = 931.0
+offset_bottom = 81.0
+text = "Try template"
+
+[node name="FileDialogImport" type="FileDialog" parent="."]
+title = "Open a File"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.glfr ; GLFR Project; application/octet-stream")
+
 [node name="ImportGlfrButton" type="Button" parent="."]
 offset_left = 17.0
 offset_top = 216.0
 offset_right = 135.0
 offset_bottom = 247.0
 text = "Import .GLFR"
-
-[node name="FileDialogImport" type="FileDialog" parent="ImportGlfrButton"]
-title = "Open a File"
-file_mode = 0
-access = 2
-filters = PackedStringArray("*.glfr ; GLFR Project; application/octet-stream")
 
 [node name="Label2" type="Label" parent="."]
 offset_left = 18.0
@@ -52,5 +59,6 @@ script = ExtResource("2_ekxnf")
 
 [connection signal="pressed" from="CreateNewButton" to="." method="_on_create_new_button_pressed"]
 [connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="TryTemplateButton" to="." method="_on_try_template_button_pressed"]
+[connection signal="file_selected" from="FileDialogImport" to="." method="_on_file_dialog_import_file_selected"]
 [connection signal="pressed" from="ImportGlfrButton" to="." method="_on_import_glfr_button_pressed"]
-[connection signal="file_selected" from="ImportGlfrButton/FileDialogImport" to="." method="_on_file_dialog_import_file_selected"]

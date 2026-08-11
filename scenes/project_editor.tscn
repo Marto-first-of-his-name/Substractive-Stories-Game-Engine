@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c6euumsoulpst"]
 
 [ext_resource type="Script" uid="uid://b02480fs3gybr" path="res://scripts/project_editor.gd" id="1_nmxbk"]
-[ext_resource type="Script" uid="uid://4j73lus1k3kq" path="res://scripts/imageUploadManager.gd" id="2_u4f81"]
+[ext_resource type="Script" uid="uid://srlggmrffjl4" path="res://scripts/file_upload_manager.gd" id="2_nmxbk"]
 
 [node name="ProjectEditor" type="Node2D"]
 script = ExtResource("1_nmxbk")
@@ -14,7 +14,7 @@ offset_bottom = 42.0
 placeholder_text = "Game name"
 expand_to_text_length = true
 
-[node name="uploadButton" type="Button" parent="."]
+[node name="uploadFilesButton" type="Button" parent="."]
 offset_left = 48.0
 offset_top = 110.0
 offset_right = 146.0
@@ -69,6 +69,7 @@ offset_left = 250.0
 offset_top = 397.0
 offset_right = 343.0
 offset_bottom = 428.0
+theme_override_colors/font_color = Color(0.7531406, 0.9610078, 0.3295941, 1)
 text = "Play game"
 
 [node name="ExportGlfrButton" type="Button" parent="."]
@@ -95,8 +96,8 @@ disabled = true
 text = "Export game as .exe"
 
 [node name="FileDialogUpload" type="FileDialog" parent="."]
-title = "Open a File"
-file_mode = 0
+title = "Open File(s)"
+file_mode = 1
 access = 2
 
 [node name="MainMenuButton" type="Button" parent="."]
@@ -110,14 +111,8 @@ text = "Return to Main Menu"
 access = 2
 filters = PackedStringArray("*.glfr ; GLFR Project; application/octet-stream")
 
-[node name="uploadedImage" type="TextureRect" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
-expand_mode = 1
-stretch_mode = 5
-
-[node name="ImageUploadManager" type="Node" parent="."]
-script = ExtResource("2_u4f81")
+[node name="FilesUploadManager" type="Node" parent="."]
+script = ExtResource("2_nmxbk")
 
 [node name="Label" type="Label" parent="."]
 offset_left = 50.0
@@ -155,12 +150,12 @@ offset_bottom = 389.0
 text = "You can set the first scene here and try the game"
 
 [connection signal="text_changed" from="GameNameLineEdit" to="." method="_on_game_name_line_edit_text_changed"]
-[connection signal="pressed" from="uploadButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="uploadFilesButton" to="." method="_on_upload_button_pressed"]
 [connection signal="pressed" from="createSceneButton" to="." method="_on_create_scene_button_pressed"]
 [connection signal="item_selected" from="EditScenePickerOptionButton" to="." method="_on_edit_scene_picker_option_button_item_selected"]
 [connection signal="pressed" from="editSceneButton" to="." method="_on_edit_scene_button_pressed"]
 [connection signal="item_selected" from="StartScenePickerOptionButton" to="." method="_on_start_scene_picker_option_button_item_selected"]
 [connection signal="pressed" from="ExportGlfrButton" to="." method="_on_export_glfr_button_pressed"]
-[connection signal="file_selected" from="FileDialogUpload" to="." method="_on_file_dialog_file_selected"]
+[connection signal="files_selected" from="FileDialogUpload" to="." method="_on_file_dialog_upload_files_selected"]
 [connection signal="pressed" from="MainMenuButton" to="." method="_on_main_menu_button_pressed"]
 [connection signal="file_selected" from="FileDialogExport" to="." method="_on_file_dialog_export_file_selected"]

@@ -115,13 +115,13 @@ func create_correct_sentence(cs: CorrectSentence, is_recreation: bool) -> void:
 	var image_label := Label.new()
 	
 	select_image_button.button_text = "Select image"
-	select_image_button.folder_to_read = "res://game_assets/images/"
 	if is_recreation:
 		select_image_button.fileSelected.connect(_on_correct_sentence_image_selected.bind(cs,image_label))
 	else:
 		select_image_button.fileSelected.connect(_on_correct_sentence_image_selected.bind(new_correct_sentence,image_label))
 	new_v_box_image.add_child(select_image_button)
-	
+	select_image_button.set_file_dialog_access(FileDialog.ACCESS_USERDATA)
+	select_image_button.set_folder_to_read("user://game_assets/")
 	image_label.add_theme_font_size_override("font_size",10)
 	image_label.custom_minimum_size = Vector2(0,26)
 	if is_recreation and cs.image_path:

@@ -9,3 +9,4 @@ anchors_preset = 0
 offset_right = 87.0
 offset_bottom = 31.0
 script = ExtResource("1_p0dng")
+folder_to_read = "res://game_assets/"

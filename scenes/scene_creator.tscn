@@ -45,7 +45,7 @@ offset_bottom = 90.0
 placeholder_text = "Write default sentence."
 
 [node name="SelectDefaultImageButton" type="Control" parent="."]
-custom_minimum_size = Vector2(165, 31)
+custom_minimum_size = Vector2(174, 31)
 layout_mode = 3
 anchors_preset = 0
 offset_left = 40.0
@@ -54,7 +54,6 @@ offset_right = 211.0
 offset_bottom = 90.0
 script = ExtResource("3_uc2vv")
 button_text = "Select default image*"
-folder_to_read = "res://game_assets/images/"
 metadata/_custom_type_script = "uid://crcqtctckm4cs"
 
 [node name="defaultImageLabel" type="Label" parent="."]
