@@ -10,6 +10,7 @@ func _ready() -> void:
 		exit_button.queue_free()
 		file_upload_manager.files_loaded.connect(_on_project_files_loaded)
 	file_upload_manager._create_asset_directory()
+	file_upload_manager.clear_assets()
 
 func _on_project_files_loaded(files: Array) -> void:
 	if files.is_empty():
@@ -48,7 +49,11 @@ func import_project(path: String) -> GameGLFR:
 	if error != OK:
 		print("Failed to open GLFR project: ", error)
 		return null
+		
+	# Extract assets
+	extract_assets(reader)
 
+	# Read project JSON
 	var json_bytes := reader.read_file("project.json")
 	reader.close()
 	
@@ -68,9 +73,38 @@ func import_project(path: String) -> GameGLFR:
 	
 	return GameGLFR.from_dict(data)
 
+func extract_assets(reader: ZIPReader) -> void:
+	var files := reader.get_files()
+
+	var dir := DirAccess.open("user://")
+
+	if dir == null:
+		push_error("Could not open user://")
+		return
+
+	dir.make_dir_recursive("game_assets")
+
+	for file_path in files:
+		if not file_path.begins_with("game_assets/"):
+			continue
+
+		var filename := file_path.get_file()
+		var data := reader.read_file(file_path)
+
+		var output_path := "user://game_assets/" + filename
+
+		var output := FileAccess.open(output_path, FileAccess.WRITE)
+
+		if output == null:
+			push_error("Could not extract asset: " + output_path)
+			continue
+
+		output.store_buffer(data)
+		output.close()
 
 func _on_file_dialog_import_file_selected(path: String) -> void:
-	Global.game_controller.start_project_editor(import_project(path))
+	var game_glfr := import_project(path)
+	Global.game_controller.start_project_editor(game_glfr)
 
 
 func _on_exit_button_pressed() -> void:
@@ -78,4 +112,5 @@ func _on_exit_button_pressed() -> void:
 
 
 func _on_try_template_button_pressed() -> void:
-	Global.game_controller.start_project_editor(import_project("res://template.glfr"))
+	var game_glfr := import_project("res://template.glfr")
+	Global.game_controller.start_project_editor(game_glfr)

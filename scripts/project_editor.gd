@@ -44,6 +44,7 @@ func _on_upload_button_pressed() -> void:
 
 func _on_files_loaded(files: Array) -> void: #itch
 	files_upload_manager.save_uploaded_files(files)
+	refresh_asset_list()
 	
 
 func _on_file_dialog_upload_files_selected(paths: PackedStringArray) -> void:
@@ -106,9 +107,33 @@ func export_project(path: String) -> bool:
 		print ("Failed to create project file: ", error)
 		return false
 	
+	#add project data
 	packer.start_file("project.json")
 	packer.write_file(json_text.to_utf8_buffer())
 	packer.close_file()
+	
+	#add all user assets
+	var asset_dir := DirAccess.open("user://game_assets")
+	
+	if asset_dir:
+		var files := asset_dir.get_files()
+
+		for filename in files:
+			var asset_path := "user://game_assets/" + filename
+
+			var file := FileAccess.open(asset_path, FileAccess.READ)
+
+			if file == null:
+				print("Could not open asset: ", asset_path)
+				continue
+
+			var data := file.get_buffer(file.get_length())
+			file.close()
+
+			packer.start_file("game_assets/" + filename)
+			packer.write_file(data)
+			packer.close_file()
+
 	
 	packer.close()
 	print("project exported succesfully")

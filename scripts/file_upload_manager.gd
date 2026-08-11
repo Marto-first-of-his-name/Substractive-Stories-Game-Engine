@@ -193,3 +193,16 @@ func get_available_assets() -> Array[Dictionary]:
 		assets.append(asset)
 
 	return assets
+
+func clear_assets() -> void:
+	var dir := DirAccess.open(ASSET_FOLDER)
+
+	if dir == null:
+		return
+
+	for filename in dir.get_files():
+		var path := ASSET_FOLDER.path_join(filename)
+		var error := dir.remove(filename)
+
+		if error != OK:
+			push_error("Could not delete asset: " + path)
