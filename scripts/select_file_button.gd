@@ -29,7 +29,7 @@ func set_folder_to_read(path: String) -> void:
 	folder_to_read = path
 	
 	if file_dialog:
-		file_dialog.root_subfolder = "user://"
+		file_dialog.root_subfolder = folder_to_read
 
 
 func set_file_dialog_access(type: FileDialog.Access) -> void:

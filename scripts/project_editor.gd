@@ -9,10 +9,12 @@ var current_project: GameGLFR
 @onready var file_dialog_export: FileDialog = $FileDialogExport
 @onready var edit_scene_picker: OptionButton = $EditScenePickerOptionButton
 @onready var start_scene_picker: OptionButton = $StartScenePickerOptionButton
+@onready var asset_container: HBoxContainer = $ScrollContainer/AssetContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	files_upload_manager.files_loaded.connect(_on_files_loaded)
+	refresh_asset_list()
 
 func display_project_to_edit() -> void:
 	game_name_line_edit.text = current_project.game_name
@@ -41,8 +43,8 @@ func _on_upload_button_pressed() -> void:
 		files_upload_manager.open_file_picker("image/png,image/jpeg,image/gif,image/webp", true)
 
 func _on_files_loaded(files: Array) -> void: #itch
-	return
 	files_upload_manager.save_uploaded_files(files)
+	
 
 func _on_file_dialog_upload_files_selected(paths: PackedStringArray) -> void:
 	var files: Array = []
@@ -63,6 +65,7 @@ func _on_file_dialog_upload_files_selected(paths: PackedStringArray) -> void:
 		})
 
 	files_upload_manager.save_uploaded_files(files)
+	refresh_asset_list()
 
 
 func _on_create_scene_button_pressed() -> void:
@@ -160,3 +163,26 @@ func _on_file_dialog_export_file_selected(path: String) -> void:
 
 func _on_main_menu_button_pressed() -> void:
 	Global.game_controller.return_to_main_menu()
+
+func refresh_asset_list() -> void:
+	for child in asset_container.get_children():
+		child.queue_free()
+	var assets := files_upload_manager.get_available_assets()
+
+	for asset in assets:
+		if asset["texture"] == null:
+			var label := Label.new()
+			var text_to_use :String = asset["name"]
+			if text_to_use.length() > 9:
+				text_to_use = text_to_use.left(7) + ".."
+			label.text = text_to_use
+			asset_container.add_child(label)
+			continue
+
+		var texture_rect := TextureRect.new()
+		texture_rect.texture = asset["texture"]
+		texture_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		texture_rect.custom_minimum_size = Vector2(60, 60)
+
+		asset_container.add_child(texture_rect)

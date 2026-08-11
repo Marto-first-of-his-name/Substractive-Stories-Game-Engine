@@ -149,6 +149,16 @@ offset_right = 532.0
 offset_bottom = 389.0
 text = "You can set the first scene here and try the game"
 
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+offset_left = 164.0
+offset_top = 118.0
+offset_right = 1093.0
+offset_bottom = 194.0
+
+[node name="AssetContainer" type="HBoxContainer" parent="ScrollContainer"]
+clip_contents = true
+layout_mode = 2
+
 [connection signal="text_changed" from="GameNameLineEdit" to="." method="_on_game_name_line_edit_text_changed"]
 [connection signal="pressed" from="uploadFilesButton" to="." method="_on_upload_button_pressed"]
 [connection signal="pressed" from="createSceneButton" to="." method="_on_create_scene_button_pressed"]

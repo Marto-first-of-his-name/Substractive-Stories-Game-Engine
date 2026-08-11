@@ -89,8 +89,6 @@ func _on_files_selected(args: Array) -> void:
 		"data": data
 	}]
 
-	save_uploaded_files(files)
-
 	files_loaded.emit(files)
 
 const ASSET_FOLDER := "user://game_assets"
@@ -168,3 +166,30 @@ func _create_asset_directory() -> void:
 
 	if error != OK and error != ERR_ALREADY_EXISTS:
 		push_error("Could not create game_assets: " + str(error))
+
+func get_available_assets() -> Array[Dictionary]:
+	var assets: Array[Dictionary] = []
+
+	var dir := DirAccess.open(ASSET_FOLDER)
+
+	if dir == null:
+		return assets
+
+	for filename in dir.get_files():
+		var path := ASSET_FOLDER.path_join(filename)
+
+		var asset := {
+			"name": filename,
+			"path": path,
+			"texture": null
+		}
+
+		# Try to load an image preview.
+		var image := Image.load_from_file(path)
+
+		if image:
+			asset["texture"] = ImageTexture.create_from_image(image)
+
+		assets.append(asset)
+
+	return assets
