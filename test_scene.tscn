@@ -12,10 +12,11 @@ scale = Vector2(1.7760663, 1.9656249)
 texture = ExtResource("2_sasra")
 
 [node name="wordcountlabel" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(800, 0)
 offset_left = 265.0
 offset_top = 51.0
-offset_right = 946.99023
-offset_bottom = 91.0
+offset_right = 1065.0
+offset_bottom = 74.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 bbcode_enabled = true
 text = "Word count: 10/8 words"
@@ -25,12 +26,11 @@ fit_content = true
 offset_left = 266.0
 offset_top = 83.0
 offset_right = 947.99023
-offset_bottom = 123.0
-mouse_default_cursor_shape = 2
+offset_bottom = 232.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/normal_font_size = 48
+theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true
-fit_content = true
+text = " Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum"
 meta_underlined = false
 
 [node name="ContinueButton" type="Button" parent="."]
@@ -41,7 +41,14 @@ offset_bottom = 599.0
 disabled = true
 text = "Continue"
 
+[node name="ExitButton" type="Button" parent="."]
+offset_left = 994.0
+offset_top = 11.0
+offset_right = 1126.0
+offset_bottom = 42.0
+text = "Return to editor"
+
 [connection signal="meta_clicked" from="sentencelabel" to="." method="_on_sentencelabel_meta_clicked"]
 [connection signal="meta_hover_ended" from="sentencelabel" to="." method="_on_sentencelabel_meta_hover_ended"]
 [connection signal="meta_hover_started" from="sentencelabel" to="." method="_on_sentencelabel_meta_hover_started"]
-[connection signal="pressed" from="ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="ContinueButton" to="." method="_on_continue_button_pressed_first"]

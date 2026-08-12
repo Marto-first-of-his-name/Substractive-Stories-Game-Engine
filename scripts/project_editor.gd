@@ -211,3 +211,8 @@ func refresh_asset_list() -> void:
 		texture_rect.custom_minimum_size = Vector2(60, 60)
 
 		asset_container.add_child(texture_rect)
+
+
+func _on_play_game_button_pressed() -> void:
+	if current_project.start_scene:
+		Global.game_controller.load_scene_template(current_project.start_scene.get_id())

@@ -165,6 +165,7 @@ layout_mode = 2
 [connection signal="item_selected" from="EditScenePickerOptionButton" to="." method="_on_edit_scene_picker_option_button_item_selected"]
 [connection signal="pressed" from="editSceneButton" to="." method="_on_edit_scene_button_pressed"]
 [connection signal="item_selected" from="StartScenePickerOptionButton" to="." method="_on_start_scene_picker_option_button_item_selected"]
+[connection signal="pressed" from="PlayGameButton" to="." method="_on_play_game_button_pressed"]
 [connection signal="pressed" from="ExportGlfrButton" to="." method="_on_export_glfr_button_pressed"]
 [connection signal="files_selected" from="FileDialogUpload" to="." method="_on_file_dialog_upload_files_selected"]
 [connection signal="pressed" from="MainMenuButton" to="." method="_on_main_menu_button_pressed"]

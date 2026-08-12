@@ -84,6 +84,7 @@ layout_mode = 2
 
 [node name="CorrectSentencesContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 20
 
 [node name="SaveAndExitButton" type="Button" parent="."]
 offset_left = 31.0
