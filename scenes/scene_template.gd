@@ -34,7 +34,8 @@ func _ready() -> void:
 func initialise_nodes() -> void:
 	
 	#sprite 2D
-	sprite2d = Sprite2D.new()
+	#sprite2d = Sprite2D.new()
+	pass
 
 
 func get_texture_from_path(path: String) -> Texture2D:

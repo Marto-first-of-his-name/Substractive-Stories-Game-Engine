@@ -66,6 +66,12 @@ func save_scene(scene:Scene) -> void:
 	# if the scene is new:
 	current_project.add_scene(scene)
 
+func load_scene_template(scene_id: int) -> void:
+	var scene_template := SceneTemplate.create(get_scene_from_id(scene_id))
+	free_current_gui()
+	current_gui = scene_template
+	add_child(current_gui)
+
 
 func replace_scene(scene_old: Scene, scene_new: Scene) -> void:
 	scene_old.scene_name = scene_new.scene_name

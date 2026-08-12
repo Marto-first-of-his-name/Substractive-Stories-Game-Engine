@@ -17,6 +17,7 @@ offset_top = 51.0
 offset_right = 946.99023
 offset_bottom = 91.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
 text = "Word count: 10/8 words"
 fit_content = true
 
@@ -27,10 +28,20 @@ offset_right = 947.99023
 offset_bottom = 123.0
 mouse_default_cursor_shape = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 48
 bbcode_enabled = true
 fit_content = true
 meta_underlined = false
 
+[node name="ContinueButton" type="Button" parent="."]
+offset_left = 983.0
+offset_top = 568.0
+offset_right = 1062.0
+offset_bottom = 599.0
+disabled = true
+text = "Continue"
+
 [connection signal="meta_clicked" from="sentencelabel" to="." method="_on_sentencelabel_meta_clicked"]
 [connection signal="meta_hover_ended" from="sentencelabel" to="." method="_on_sentencelabel_meta_hover_ended"]
 [connection signal="meta_hover_started" from="sentencelabel" to="." method="_on_sentencelabel_meta_hover_started"]
+[connection signal="pressed" from="ContinueButton" to="." method="_on_continue_button_pressed"]
