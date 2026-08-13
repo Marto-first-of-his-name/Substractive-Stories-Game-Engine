@@ -214,5 +214,4 @@ func refresh_asset_list() -> void:
 
 
 func _on_play_game_button_pressed() -> void:
-	if current_project.start_scene:
-		Global.game_controller.load_scene_template(current_project.start_scene.get_id())
+	Global.game_controller.start_game()

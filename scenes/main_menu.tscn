@@ -47,6 +47,13 @@ offset_right = 433.0
 offset_bottom = 203.0
 text = "Here you can import a previously exported project."
 
+[node name="Label4" type="Label" parent="."]
+offset_left = 703.0
+offset_top = 17.0
+offset_right = 1118.0
+offset_bottom = 40.0
+text = "I am currently still working on the template myself."
+
 [node name="Label3" type="Label" parent="."]
 offset_left = 21.0
 offset_top = 23.0

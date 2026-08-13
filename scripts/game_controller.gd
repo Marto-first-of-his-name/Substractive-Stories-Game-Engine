@@ -4,6 +4,9 @@ var current_gui: Node
 var current_project: GameGLFR
 var is_game_local:bool = true #true if tool is to be ran locally, false if it's for itch
 
+var karmas: Array[int]
+var karma_judgements: Array[String]
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Global.game_controller = self
@@ -72,6 +75,13 @@ func load_scene_template(scene_id: int) -> void:
 	current_gui = scene_template
 	add_child(current_gui)
 
+func load_judgement_scene() -> void:
+	var judgement := preload("res://scenes/judgement.tscn")
+	free_current_gui()
+	current_gui = judgement.instantiate()
+	add_child(current_gui)
+	current_gui.show_karma_text(karmas, karma_judgements)
+	current_gui.update_total_karma(karmas)
 
 func replace_scene(scene_old: Scene, scene_new: Scene) -> void:
 	scene_old.scene_name = scene_new.scene_name
@@ -88,3 +98,10 @@ func get_scene_from_id(id:int) -> Scene:
 		if s.id == id:
 			return s
 	return null
+
+func start_game() -> void:
+	if current_project:
+		if current_project.start_scene:
+			karmas.clear()
+			karma_judgements.clear()
+			load_scene_template(current_project.start_scene.get_id())

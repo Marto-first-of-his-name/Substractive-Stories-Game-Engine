@@ -112,5 +112,5 @@ func _on_exit_button_pressed() -> void:
 
 
 func _on_try_template_button_pressed() -> void:
-	var game_glfr := import_project("res://template.glfr")
+	var game_glfr := import_project("res://witcher.glfr")
 	Global.game_controller.start_project_editor(game_glfr)

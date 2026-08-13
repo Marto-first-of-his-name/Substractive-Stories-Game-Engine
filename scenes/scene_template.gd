@@ -200,7 +200,6 @@ func is_current_sentence_correct() -> bool:
 			return true
 	return false
 
-
 func current_sentence_is_what_correct_sentence_id() -> int:
 	#returns >= 0 if the current sentence is correct 
 	#and -1 if the current sentence isn't actually correct 
@@ -243,16 +242,21 @@ func _on_continue_button_pressed_first() -> void:
 		print("error, correct_sentence_id is < 0")
 		return
 	var follow_up: String = follow_ups[correct_sentence_id] if follow_ups[correct_sentence_id]!=null else ""
+	save_karma_and_judgement_to_global()
 	show_follow_up_text_and_go_next(follow_up)
 
 func _on_continue_button_pressed_again() -> void:
 	continue_button.disabled = true
 	var next_scene_id : int = next_scene_ids[correct_sentence_id]
 	if next_scene_id == 0:
-		print("go to judgement")
+		Global.game_controller.load_judgement_scene()
 		return
 	if next_scene_id > 0:
 		Global.game_controller.load_scene_template(next_scene_id)
+
+func save_karma_and_judgement_to_global() -> void:
+	Global.game_controller.karmas.append(karmas[correct_sentence_id])
+	Global.game_controller.karma_judgements.append(karma_judgements[correct_sentence_id])
 
 func show_follow_up_text_and_go_next(text: String) -> void:
 	build_rich_sentence_from_words(default_sentence_words, false)
